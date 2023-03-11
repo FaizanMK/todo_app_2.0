@@ -43,7 +43,10 @@ function App() {
   // }, []);
   useEffect(() => {
     const unsubscribe = onSnapshot(todosRef, (querySnapshot) => {
-      const data = querySnapshot.docs.map((doc) => doc.data().todo);
+      const data = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        todo: doc.data().todo,
+      }));
       setTodos(data);
     });
     return () => {
@@ -75,7 +78,7 @@ function App() {
       </form>
       <ul>
         {todos.map((todo) => (
-          <Todo text={todo} />
+          <Todo todo={todo} />
         ))}
       </ul>
     </div>
